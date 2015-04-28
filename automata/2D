@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <ctime>
+#include <cstdio>
+
+using namespace std;
+
+typedef vector<char> vc;
+typedef vector<vc> vvc;
+
+char c0 = (char) 219, c1 = (char) 255;
+
+// defines initial vvc vector of c0 and c1 characters
+vvc f0() {
+    vc v1c(80, c0);
+    vvc v2c(25, v1c);
+    v2c [20][51] = c1;
+    return v2c;
+    }
+
+// defines c0 or c1 character from a vvc vector
+char f1(vvc v, int i, int j) {
+    if (i > 0 & i < 24 & j > 0 & j < 79) {
+        char
+        c2 = v[i - 1][j + 1], c3 = v[i][j + 1], c4 = v[i + 1][j + 1],
+        c9 = v[i - 1][j],     c  = v[i][j],     c5 = v[i + 1][j],
+        c8 = v[i - 1][j - 1], c7 = v[i][j - 1], c6 = v[i + 1][j - 1];
+                                                              
+        if (
+            c2 == c  & c3 == c &
+            c4 == c8 & c5 == c9 &
+            c2 == c8 & c3 == c6 &
+            c4 == c  & c5 == c  &
+            c7 == c9) return c0;
+        else return c1;
+        }
+    if (i == 0 || i == 24 || j == 0 || j == 79)
+        return c1;
+    }
+
+// defines vvc vector of c0 and c1 characters from a similar one
+vvc f2(vvc v) {
+    vvc v2c = f0();
+    for (int a = 0; a < 25; a++)
+        for (int b = 0; b < 80; b++)
+            v2c [a][b] = f1(v, a, b);
+    return v2c;
+    }
+
+// print vvc vector of c0 and c1 characters
+void f3(vvc v) {
+    for (int a = 0; a < 25; a++)
+        for (int b = 0; b < 80; b++)
+            cout << v[a][b];
+    }
+
+// slow down printing
+void f4(double i) {
+    clock_t c = clock() + i * CLOCKS_PER_SEC;
+    while (clock() < c);
+    }
+
+int main() {
+    vvc v = f0();
+    f3(v);
+    for (int i = 1; i <= 1000; i++) {
+        v = f2(v); f3(v); f4(1);
+        }
+    }
+
