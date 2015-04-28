@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <time.h>
+#include <windows.h>
+
+#define C(i) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), i)
+#define C(j) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), j)
+#define C(k) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), k)
+#define P1 ((i*j*k)%i)
+#define P2 ((i*j*k)%j)
+#define P3 ((i*j*k)%k)
+#define Q1 {i = j<k ? j++, k : ++j, k++; printf("%c", c2); C(i);}
+#define Q2 {j = i>k ? ++i, k++ : i, ++k; printf("%c", c1); C(j);}
+#define Q3 {k = i<j ? ++i, j++  : i++, j; printf("%c", c2); C(k);}
+
+void f(double d) {
+    // slow down printing
+    clock_t c = clock() + d * CLOCKS_PER_SEC;
+    while (clock() < c);
+    }
+
+int main() {
+    long i = 1, j = 2, k = 3;
+    char c1 = 255, c2 = 219;
+    while (1) {
+        if (P1) Q1 else Q2 Q3
+        if (P2) Q2 else Q3 Q1
+        if (P3) Q3 else Q1 Q2
+        f(0.001);
+        }
+    }
+
